@@ -1,9 +1,9 @@
 // Variables to select html elements
-var quoteEl = $(".quote-field");
+var quoteEl = $('.quote-field');
 
 // Gets data from Chuck Norris API
 function getChuckNorrisData() {
-  var chuckNorrisURL = "https://api.chucknorris.io/jokes/random";
+  var chuckNorrisURL = 'https://api.chucknorris.io/jokes/random';
   fetch(chuckNorrisURL)
     .then(function (chuckNorrisResponse) {
       console.log(chuckNorrisResponse);
@@ -11,39 +11,67 @@ function getChuckNorrisData() {
     })
 
     .then(function (chuckNorrisData) {
-      console.log("chuckNorrisData: ");
+      console.log('chuckNorrisData: ');
       console.log(chuckNorrisData);
     });
 }
 
 // Translates ?text= paramater into Yoda speak
-var yodaURL =
-  "https://api.funtranslations.com/translate/yoda.json?text=I am going to the beach today";
+function getYodaData(quoteText) {
+  var yodaURL =
+    'https://api.funtranslations.com/translate/yoda.json?text=' +
+    encodeURIComponent(quoteText);
 
-function getYodaData() {
+  //Getting data from YodaSpeak
   fetch(yodaURL)
     .then(function (yodaResponse) {
-      console.log("yodaResponse: ");
-      console.log(yodaResponse);
+      console.log('yodaResponse: ', yodaResponse);
       return yodaResponse.json();
     })
 
     .then(function (yodaData) {
-      console.log("yodaData: ");
+      console.log('yodaData: ');
       console.log(yodaData);
+
+      //Getting translated data from YodaSpeak and displaying in a new p element (REPLACE P ELEMENT LATER)
+      const yodaTranslation = yodaData.contents.translated;
+      const yodaTranslationEl = $('<p>').text(`Yoda: "${yodaTranslation}`);
+      quoteEl.append(yodaTranslationEl);
     });
 }
+//Event Listener for translation dropdown
+$('#Translate').on('change', function () {
+  const pickedTranslation = $(this).val();
+  if (pickedTranslation === 'Yoda') {
+    var yodaText = $('.quote-field h5').text();
+    getYodaData(yodaText);
+  }
+});
 
+//UNFINISHED: Hacker translator...
+// function getHackerData(quoteText){
+//     var hackerURL="https://funtranslations.com/extensions/embed/v1/funtranslations.json?text=" +encodeURIComponent(quoteText);
+//     fetch(hackerURL)
+//     .then(function(hackerResponse){
+//         console.log("hacker Response: ", hackerResponse);
+//         return hackerResponse.json();
+//     })
+//     .then(function(h4x0rdata){
+//         console.log("h4x0rdata:", h4x0rdata);
+//         const hackerTranslation = h4x0rdata.contents.translated;
+//         const hackerTranslationEl = $ ("<p>").text(`H4X0R: "${hackerTranslation}`);
+//     })
+// }
 // Gets data from Random Quote API
 const quoteURL =
-  "https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=10";
+  'https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=10';
 
 async function getQuoteData() {
   const options = {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "X-RapidAPI-Key": "ba9a53a5b4msh817988e2e3af1c7p18759ejsn39447850662c",
-      "X-RapidAPI-Host": "andruxnet-random-famous-quotes.p.rapidapi.com",
+      'X-RapidAPI-Key': 'ba9a53a5b4msh817988e2e3af1c7p18759ejsn39447850662c',
+      'X-RapidAPI-Host': 'andruxnet-random-famous-quotes.p.rapidapi.com',
     },
   };
 
@@ -60,8 +88,8 @@ async function getQuoteData() {
     console.log(`${quoteAuthor} - ${quoteText}`);
 
     // Create elements and set their text content to the quote
-    var quoteTextEl = $("<h5>").text(`"${quoteText}"`);
-    var quoteAuthorEl = $("<h6>").text(`- ${quoteAuthor}`);
+    var quoteTextEl = $('<h5>').text(`"${quoteText}"`);
+    var quoteAuthorEl = $('<h6>').text(`- ${quoteAuthor}`);
 
     // Appened new elements to the page
     quoteEl.append(quoteTextEl);
@@ -75,5 +103,5 @@ async function getQuoteData() {
 // getYodaData();
 
 // Generates random quote and displays it on the page when the quote button is clicked
-var quoteBtn = $(".quote-button");
-quoteBtn.on("click", getQuoteData);
+var quoteBtn = $('.quote-button');
+quoteBtn.on('click', getQuoteData);
