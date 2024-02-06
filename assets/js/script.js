@@ -40,29 +40,25 @@ function getYodaData(quoteText) {
     });
 }
 //Event Listener for translation dropdown
-$("#Translate").on("change", function () {
+
+var stringEl;
+$('#Translate').on('change', function () {
   const pickedTranslation = $(this).val();
-  if (pickedTranslation === "Yoda") {
-    var yodaText = $(".quote-field h5").text();
-    getYodaData(yodaText);
+  if (pickedTranslation === 'Yoda') {
+    // var yodaText = $('.quote-field h5').text();
+    // getYodaData(yodaText);
+
+    if (stringEl) {
+      stringEl.remove();
+    }
+    stringEl = $('<p>').text('This is a test string so we can test things');
+    quoteEl.append(stringEl);
+
+    $(this).prop('selectedIndex', 0);
   }
 });
 
-//UNFINISHED: Hacker translator...
-// function getHackerData(quoteText){
-//     var hackerURL="https://funtranslations.com/extensions/embed/v1/funtranslations.json?text=" +encodeURIComponent(quoteText);
-//     fetch(hackerURL)
-//     .then(function(hackerResponse){
-//         console.log("hacker Response: ", hackerResponse);
-//         return hackerResponse.json();
-//     })
-//     .then(function(h4x0rdata){
-//         console.log("h4x0rdata:", h4x0rdata);
-//         const hackerTranslation = h4x0rdata.contents.translated;
-//         const hackerTranslationEl = $ ("<p>").text(`H4X0R: "${hackerTranslation}`);
-//     })
-// }
-// Gets data from Random Quote API
+
 const quoteURL =
   "https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=10";
 
