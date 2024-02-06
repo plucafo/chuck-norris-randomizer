@@ -51,7 +51,7 @@ $('#Translate').on('change', function () {
     if (stringEl) {
       stringEl.remove();
     }
-    stringEl = $('<p>').text('This is a test string so we can test things');
+    stringEl = $('<p>').addClass('mt-3').text('This is a test string so we can test things');
     quoteEl.append(stringEl);
 
     $(this).prop('selectedIndex', 0);

@@ -1,3 +1,10 @@
+:root {
+  --dark: #1d1f20;
+  --light: #fafafa;
+  --quote-font: "Arial", sans-serif;
+  --translated-font: "Arial", sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,22 +12,22 @@
 }
 
 body {
-  font-family: "Gloria Hallelujah", cursive;
+  /* font-family: "Gloria Hallelujah", cursive; */
   font-weight: 300;
 }
 
 header h1 {
-  color: lightcoral;
+  color: var(--light);
 }
 
 main div p {
-  font-family: "Bradley Hand", cursive;
+  /* font-family: "Bradley Hand", cursive; */
   font-weight: 200;
 }
 
 .quote-field {
-  color: darkgreen;
-  background-color: lightcoral;
+  color: var(--dark);
+  background-color: var(--light);
 }
 
 .quote-button,
