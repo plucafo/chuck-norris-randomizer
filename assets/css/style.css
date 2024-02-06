@@ -5,8 +5,13 @@
 }
 
 body {
-  font-family: "Chuck Norris", sans-serif;
-  font-weight: 500;
+  font-family: "Gloria Hallelujah", cursive;
+  font-weight: 300;
+}
+
+main div p {
+  font-family: "Bradley Hand", cursive;
+  font-weight: 200;
 }
 
 #Translate {
