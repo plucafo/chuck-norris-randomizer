@@ -45,23 +45,54 @@ $('#Translate').on('change', function () {
   if (pickedTranslation === 'Yoda') {
     var yodaText = $('.quote-field h5').text();
     getYodaData(yodaText);
+  } else if (pickedTranslation === "Groot") {
+    var grootText = $('.quote-field h5').text();
+    getGrootData(grootText);
   }
-});
+})
 
-//UNFINISHED: Hacker translator...
-// function getHackerData(quoteText){
-//     var hackerURL="https://funtranslations.com/extensions/embed/v1/funtranslations.json?text=" +encodeURIComponent(quoteText);
-//     fetch(hackerURL)
-//     .then(function(hackerResponse){
-//         console.log("hacker Response: ", hackerResponse);
-//         return hackerResponse.json();
-//     })
-//     .then(function(h4x0rdata){
-//         console.log("h4x0rdata:", h4x0rdata);
-//         const hackerTranslation = h4x0rdata.contents.translated;
-//         const hackerTranslationEl = $ ("<p>").text(`H4X0R: "${hackerTranslation}`);
-//     })
+
+// Groot Translator
+function getGrootData(quoteText){
+  var grootURL="https://api.funtranslations.com/translate/groot.json?text=" +encodeURIComponent(quoteText);
+  fetch(grootURL)
+  .then(function(grootResponse){
+      console.log("Groot Response:", grootResponse);
+      return grootResponse.json();
+  })
+  .then(function(grootdata){
+      console.log("grootdata:", grootdata);
+      const grootTranslation = grootdata.contents.translated;
+      const grootTranslationEl = $ ("<p>").text(`Groot: "${grootTranslation}`);
+      quoteEl.append(grootTranslationEl);
+  })
+}
+
+
+//Additional API translator 'starter code'
+// function getBLANKData(quoteText){
+//   var BLANKURL="BLANKURL.COM" +encodeURIComponent(quoteText);
+//   fetch(BLANKURL)
+//   .then(function(BLANKResponse){
+//       console.log("BLANK Response:", BLANKResponse);
+//       return BLANKResponse.json();
+//   })
+//   .then(function(BLANKdata){
+//       console.log("BLANKdata:", BLANKdata);
+//       const BLANKTranslation = BLANKdata.contents.translated;
+//       const BLANKTranslationEl = $ ("<p>").text(`BLANK: "${BLANKTranslation}`);
+//       quoteEl.append(BLANKTranslationEl);
+//   })
 // }
+// 
+//In the event listener add
+//
+//  else if (pickedTranslation === "BLANK") {
+//   var BLANKText = $('.quote-field h5').text();
+//   getBLANKData(grootText);
+// }
+
+
 // Gets data from Random Quote API
 const quoteURL =
   'https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=10';
