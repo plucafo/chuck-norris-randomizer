@@ -9,15 +9,20 @@ body {
   font-weight: 300;
 }
 
+header h2 {
+  color: lightcoral;
+}
+
 main div p {
   font-family: "Bradley Hand", cursive;
   font-weight: 200;
 }
 
-#Translate {
-  background-color: white;
-  color: black;
+.quote-field {
+  color: darkgreen;
+  background-color: lightcoral;
 }
+
 .quote-button,
 #Translate {
   transition: transform 0.2s ease-in-out;
