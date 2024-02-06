@@ -5,6 +5,19 @@
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 300;
+}
+#Translate {
+  background-color: white;
+  color: black;
+}
+.quote-button,
+#Translate {
+  transition: transform 0.2s ease-in-out;
+}
+
+.quote-button:hover,
+#Translate:hover {
+  transform: scale(1.1);
 }
