@@ -17,6 +17,7 @@ function getChuckNorrisData() {
 }
 
 // Translates ?text= paramater into Yoda speak
+var yodaTranslationEl;
 function getYodaData(quoteText) {
   var yodaURL =
     "https://api.funtranslations.com/translate/yoda.json?text=" +
@@ -32,35 +33,49 @@ function getYodaData(quoteText) {
     .then(function (yodaData) {
       console.log("yodaData: ");
       console.log(yodaData);
-
+      if (yodaTranslationEl) {
+        yodaTranslationEl.remove();
+      }
       //Getting translated data from YodaSpeak and displaying in a new p element (REPLACE P ELEMENT LATER)
       const yodaTranslation = yodaData.contents.translated;
-      const yodaTranslationEl = $("<p>").text(`Yoda: "${yodaTranslation}`);
+      yodaTranslationEl = $("<p>").text(`Yoda: "${yodaTranslation}`);
       quoteEl.append(yodaTranslationEl);
     });
 }
-//Event Listener for translation dropdown
 
+// INSERTS A HARDCODED STRING FOR TESTING WITHOUT CALLING THE API
 var stringEl;
 $('#Translate').on('change', function () {
   const pickedTranslation = $(this).val();
+  if (stringEl) {
+    stringEl.remove();
+  }
   if (pickedTranslation === 'Yoda') {
-    // var yodaText = $('.quote-field h5').text();
-    // getYodaData(yodaText);
 
-    if (stringEl) {
-      stringEl.remove();
-    }
-    stringEl = $('<p>').addClass('mt-3').text('This is a test string so we can test things');
+    stringEl = $('<p>').addClass('mt-3').text('This is a string for testing purposes');
     quoteEl.append(stringEl);
 
     $(this).prop('selectedIndex', 0);
   }
 });
 
+// WORKING YODA TRANSLATOR - *** DON'T DELETE ***
+// $('#Translate').on('change', function () {
+//   const pickedTranslation = $(this).val();
+
+//   if (pickedTranslation === 'Yoda') {
+//     var yodaText = $('.quote-field h5').text();
+//     getYodaData(yodaText);
+
+//     quoteEl.append(yodaTranslationEl);
+
+//     $(this).prop('selectedIndex', 0);
+//   }
+// });
+
 
 const quoteURL =
-  "https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=10";
+  "https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=1";
 
 async function getQuoteData() {
   const options = {
