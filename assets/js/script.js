@@ -1,5 +1,6 @@
 // Variables to select html elements
 var quoteEl = $(".quote-field");
+//var translatedQuotesEl = $('#translatedQuotes')
 
 // Gets data from Chuck Norris API
 function getChuckNorrisData() {
@@ -40,6 +41,7 @@ function getYodaData(quoteText) {
       const yodaTranslation = yodaData.contents.translated;
       yodaTranslationEl = $("<p>").text(`Yoda: "${yodaTranslation}`);
       quoteEl.append(yodaTranslationEl);
+      //translatedQuotesEl.append(yodaTranslationEl);
     });
 }
 
@@ -67,8 +69,27 @@ function getLeetData(quoteText) {
       const leetTranslation = leetData.contents.translated;
       leetTranslationEl = $("<p>").text(`Leetspeak: "${leetTranslation}`);
       quoteEl.append(leetTranslationEl);
+      //translatedQuotesEl.append(leetTranslationEl);
     });
 }
+// Groot Translator
+function getGrootData(quoteText){
+  var grootURL="https://api.funtranslations.com/translate/groot.json?text=" +encodeURIComponent(quoteText);
+  fetch(grootURL)
+  .then(function(grootResponse){
+      console.log("Groot Response:", grootResponse);
+      return grootResponse.json();
+  })
+  .then(function(grootdata){
+      console.log("grootdata:", grootdata);
+
+      const grootTranslation = grootdata.contents.translated;
+      const grootTranslationEl = $ ("<p>").text(`Groot: "${grootTranslation}`);
+      quoteEl.append(grootTranslationEl);
+      //translatedQuotesEl.append(grootTranslationEl);
+  })
+}
+
 
 // INSERTS A HARDCODED STRING FOR TESTING WITHOUT CALLING THE API
 // var stringEl;
@@ -78,13 +99,30 @@ function getLeetData(quoteText) {
 //     stringEl.remove();
 //   }
 //   if (pickedTranslation === 'Yoda') {
-
+//
 //     stringEl = $('<p>').addClass('mt-3').text('This is a string for testing purposes');
 //     quoteEl.append(stringEl);
-
+//
 //     $(this).prop('selectedIndex', 0);
 //   }
 // });
+//
+//Additional API translator 'starter code'
+// function getBLANKData(quoteText){
+//   var BLANKURL="BLANKURL.COM" +encodeURIComponent(quoteText);
+//   fetch(BLANKURL)
+//   .then(function(BLANKResponse){
+//       console.log("BLANK Response:", BLANKResponse);
+//       return BLANKResponse.json();
+//   })
+//   .then(function(BLANKdata){
+//       console.log("BLANKdata:", BLANKdata);
+//       const BLANKTranslation = BLANKdata.contents.translated;
+//       const BLANKTranslationEl = $ ("<p>").text(`BLANK: "${BLANKTranslation}`);
+//       quoteEl.append(BLANKTranslationEl);
+//   })
+// }
+// 
 
 // WORKING YODA TRANSLATOR - *** DON'T DELETE ***
 $("#Translate").on("change", function () {
@@ -99,6 +137,10 @@ $("#Translate").on("change", function () {
     var textToTranslate = $(".quote-field h5").text();
     getLeetData(textToTranslate);
     quoteEl.append(leetTranslationEl);
+  } else if (pickedTranslation === "Groot") {
+    var textToTranslate = $(".quote-field h5").text();
+    getGrootData(textToTranslate);
+    quoteEl.append(grootTranslationEl);
   }
   $(this).prop("selectedIndex", 0);
 });
@@ -114,6 +156,8 @@ async function getQuoteData() {
       "X-RapidAPI-Host": "andruxnet-random-famous-quotes.p.rapidapi.com",
     },
   };
+
+
 
   try {
     const response = await fetch(quoteURL, options);
