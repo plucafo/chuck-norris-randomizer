@@ -43,36 +43,65 @@ function getYodaData(quoteText) {
     });
 }
 
+// Translates ?text= paramater into 1337 speak
+var leetTranslationEl;
+function getLeetData(quoteText) {
+  var leetURL =
+    "https://api.funtranslations.com/translate/leetspeak.json?text=" +
+    encodeURIComponent(quoteText);
+
+  //Getting data from leetspeak API
+  fetch(leetURL)
+    .then(function (leetResponse) {
+      console.log("leetResponse: ", leetResponse);
+      return leetResponse.json();
+    })
+
+    .then(function (leetData) {
+      console.log("leetData: ");
+      console.log(leetData);
+      if (leetTranslationEl) {
+        leetTranslationEl.remove();
+      }
+      //Getting translated data from leetSpeak and displaying in a new p element (REPLACE P ELEMENT LATER)
+      const leetTranslation = leetData.contents.translated;
+      leetTranslationEl = $("<p>").text(`Leetspeak: "${leetTranslation}`);
+      quoteEl.append(leetTranslationEl);
+    });
+}
+
 // INSERTS A HARDCODED STRING FOR TESTING WITHOUT CALLING THE API
-var stringEl;
-$('#Translate').on('change', function () {
-  const pickedTranslation = $(this).val();
-  if (stringEl) {
-    stringEl.remove();
-  }
-  if (pickedTranslation === 'Yoda') {
-
-    stringEl = $('<p>').addClass('mt-3').text('This is a string for testing purposes');
-    quoteEl.append(stringEl);
-
-    $(this).prop('selectedIndex', 0);
-  }
-});
-
-// WORKING YODA TRANSLATOR - *** DON'T DELETE ***
+// var stringEl;
 // $('#Translate').on('change', function () {
 //   const pickedTranslation = $(this).val();
-
+//   if (stringEl) {
+//     stringEl.remove();
+//   }
 //   if (pickedTranslation === 'Yoda') {
-//     var yodaText = $('.quote-field h5').text();
-//     getYodaData(yodaText);
 
-//     quoteEl.append(yodaTranslationEl);
+//     stringEl = $('<p>').addClass('mt-3').text('This is a string for testing purposes');
+//     quoteEl.append(stringEl);
 
 //     $(this).prop('selectedIndex', 0);
 //   }
 // });
 
+// WORKING YODA TRANSLATOR - *** DON'T DELETE ***
+$("#Translate").on("change", function () {
+  const pickedTranslation = $(this).val();
+
+  // Conditional to check which translation was selected
+  if (pickedTranslation === "Yoda") {
+    var textToTranslate = $(".quote-field h5").text();
+    getYodaData(textToTranslate);
+    quoteEl.append(yodaTranslationEl);
+  } else if (pickedTranslation === "H4X0R") {
+    var textToTranslate = $(".quote-field h5").text();
+    getLeetData(textToTranslate);
+    quoteEl.append(leetTranslationEl);
+  }
+  $(this).prop("selectedIndex", 0);
+});
 
 const quoteURL =
   "https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=1";
