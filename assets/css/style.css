@@ -20,21 +20,6 @@ header h1 {
   color: var(--light);
 }
 
-.bg-image {
-  height: auto;
-  width: 100%;
-  object-fit: fill;
-}
-
-main div p {
-  font-family: "Poppins", sans-serif;
-  font-weight: 200;
-}
-
-.quote-field {
-  color: var(--dark);
-}
-
 .quote-button,
 #Translate {
   transition: transform 0.2s ease-in-out;
