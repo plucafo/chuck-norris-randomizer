@@ -12,7 +12,7 @@
 }
 
 body {
-  /* font-family: "Gloria Hallelujah", cursive; */
+  font-family: "Poppins", sans-serif;
   font-weight: 300;
 }
 
@@ -20,14 +20,19 @@ header h1 {
   color: var(--light);
 }
 
+.bg-image {
+  height: auto;
+  width: 100%;
+  object-fit: fill;
+}
+
 main div p {
-  /* font-family: "Bradley Hand", cursive; */
+  font-family: "Poppins", sans-serif;
   font-weight: 200;
 }
 
 .quote-field {
   color: var(--dark);
-  background-color: var(--light);
 }
 
 .quote-button,
