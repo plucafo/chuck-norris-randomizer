@@ -1,24 +1,46 @@
 // Variables to select html elements
 var quoteEl = $(".quote-field");
-//var translatedQuotesEl = $('#translatedQuotes')
+var translatedQuotesEl = $("#translatedQuotes");
+var yodaTranslationEl;
+var leetTranslationEl;
+var grootTranslationEl;
 
-// Gets data from Chuck Norris API
-function getChuckNorrisData() {
-  var chuckNorrisURL = "https://api.chucknorris.io/jokes/random";
-  fetch(chuckNorrisURL)
-    .then(function (chuckNorrisResponse) {
-      console.log(chuckNorrisResponse);
-      return chuckNorrisResponse.json();
-    })
+// Function to get a random quote from the API and display it on the page
+var quoteURL =
+  "https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=1";
+async function getQuoteData() {
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "ba9a53a5b4msh817988e2e3af1c7p18759ejsn39447850662c",
+      "X-RapidAPI-Host": "andruxnet-random-famous-quotes.p.rapidapi.com",
+    },
+  };
+  try {
+    var response = await fetch(quoteURL, options);
+    var quoteData = await response.json();
+    console.log(quoteData); // Logs quote data to console for testing
 
-    .then(function (chuckNorrisData) {
-      console.log("chuckNorrisData: ");
-      console.log(chuckNorrisData);
-    });
+    quoteEl.empty(); // Clears the quote-field element before adding a new random quote
+
+    // Variables to collect quote and author data from API
+    var quoteText = quoteData[0].quote;
+    var quoteAuthor = quoteData[0].author;
+    console.log(`${quoteAuthor} - ${quoteText}`);
+
+    // Create elements and set their text content to the quote
+    var quoteTextEl = $("<h5>").text(`"${quoteText}"`);
+    var quoteAuthorEl = $("<h6>").text(`- ${quoteAuthor}`);
+
+    // Appened new elements to the page
+    quoteEl.append(quoteTextEl);
+    quoteEl.append(quoteAuthorEl);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // Translates ?text= paramater into Yoda speak
-var yodaTranslationEl;
 function getYodaData(quoteText) {
   var yodaURL =
     "https://api.funtranslations.com/translate/yoda.json?text=" +
@@ -40,13 +62,12 @@ function getYodaData(quoteText) {
       //Getting translated data from YodaSpeak and displaying in a new p element (REPLACE P ELEMENT LATER)
       const yodaTranslation = yodaData.contents.translated;
       yodaTranslationEl = $("<p>").text(`Yoda: "${yodaTranslation}`);
-      quoteEl.append(yodaTranslationEl);
-      //translatedQuotesEl.append(yodaTranslationEl);
+      // quoteEl.append(yodaTranslationEl);
+      translatedQuotesEl.append(yodaTranslationEl);
     });
 }
 
 // Translates ?text= paramater into 1337 speak
-var leetTranslationEl;
 function getLeetData(quoteText) {
   var leetURL =
     "https://api.funtranslations.com/translate/leetspeak.json?text=" +
@@ -66,30 +87,31 @@ function getLeetData(quoteText) {
         leetTranslationEl.remove();
       }
       //Getting translated data from leetSpeak and displaying in a new p element (REPLACE P ELEMENT LATER)
-      const leetTranslation = leetData.contents.translated;
+      var leetTranslation = leetData.contents.translated;
       leetTranslationEl = $("<p>").text(`Leetspeak: "${leetTranslation}`);
-      quoteEl.append(leetTranslationEl);
-      //translatedQuotesEl.append(leetTranslationEl);
+      // quoteEl.append(leetTranslationEl);
+      translatedQuotesEl.append(leetTranslationEl);
     });
 }
 // Groot Translator
-function getGrootData(quoteText){
-  var grootURL="https://api.funtranslations.com/translate/groot.json?text=" +encodeURIComponent(quoteText);
+function getGrootData(quoteText) {
+  var grootURL =
+    "https://api.funtranslations.com/translate/groot.json?text=" +
+    encodeURIComponent(quoteText);
   fetch(grootURL)
-  .then(function(grootResponse){
+    .then(function (grootResponse) {
       console.log("Groot Response:", grootResponse);
       return grootResponse.json();
-  })
-  .then(function(grootdata){
-      console.log("grootdata:", grootdata);
+    })
+    .then(function (grootData) {
+      console.log("grootdata:", grootData);
 
-      const grootTranslation = grootdata.contents.translated;
-      const grootTranslationEl = $ ("<p>").text(`Groot: "${grootTranslation}`);
-      quoteEl.append(grootTranslationEl);
-      //translatedQuotesEl.append(grootTranslationEl);
-  })
+      var grootTranslation = grootData.contents.translated;
+      grootTranslationEl = $("<p>").text(`Groot: "${grootTranslation}`);
+      // quoteEl.append(grootTranslationEl);
+      translatedQuotesEl.append(grootTranslationEl);
+    });
 }
-
 
 // INSERTS A HARDCODED STRING FOR TESTING WITHOUT CALLING THE API
 // var stringEl;
@@ -122,69 +144,25 @@ function getGrootData(quoteText){
 //       quoteEl.append(BLANKTranslationEl);
 //   })
 // }
-// 
+//
 
 // WORKING YODA TRANSLATOR - *** DON'T DELETE ***
 $("#Translate").on("change", function () {
-  const pickedTranslation = $(this).val();
+  var pickedTranslation = $(this).val();
 
   // Conditional to check which translation was selected
   if (pickedTranslation === "Yoda") {
     var textToTranslate = $(".quote-field h5").text();
     getYodaData(textToTranslate);
-    quoteEl.append(yodaTranslationEl);
   } else if (pickedTranslation === "H4X0R") {
     var textToTranslate = $(".quote-field h5").text();
     getLeetData(textToTranslate);
-    quoteEl.append(leetTranslationEl);
   } else if (pickedTranslation === "Groot") {
     var textToTranslate = $(".quote-field h5").text();
     getGrootData(textToTranslate);
-    quoteEl.append(grootTranslationEl);
   }
   $(this).prop("selectedIndex", 0);
 });
-
-const quoteURL =
-  "https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=1";
-
-async function getQuoteData() {
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "ba9a53a5b4msh817988e2e3af1c7p18759ejsn39447850662c",
-      "X-RapidAPI-Host": "andruxnet-random-famous-quotes.p.rapidapi.com",
-    },
-  };
-
-
-
-  try {
-    const response = await fetch(quoteURL, options);
-    const quoteData = await response.json();
-    console.log(quoteData); // Logs quote data to console for testing
-
-    quoteEl.empty(); // Clears the quote-field element before adding a new random quote
-
-    // Variables to collect quote and author data from API
-    var quoteText = quoteData[0].quote;
-    var quoteAuthor = quoteData[0].author;
-    console.log(`${quoteAuthor} - ${quoteText}`);
-
-    // Create elements and set their text content to the quote
-    var quoteTextEl = $("<h5>").text(`"${quoteText}"`);
-    var quoteAuthorEl = $("<h6>").text(`- ${quoteAuthor}`);
-
-    // Appened new elements to the page
-    quoteEl.append(quoteTextEl);
-    quoteEl.append(quoteAuthorEl);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// getChuckNorrisData();
-// getYodaData();
 
 // Generates random quote and displays it on the page when the quote button is clicked
 var quoteBtn = $(".quote-button");
