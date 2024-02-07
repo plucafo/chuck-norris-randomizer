@@ -12,7 +12,6 @@
 }
 
 body {
-  /* font-family: "Gloria Hallelujah", cursive; */
   font-weight: 300;
 }
 
@@ -21,13 +20,11 @@ header h1 {
 }
 
 main div p {
-  /* font-family: "Bradley Hand", cursive; */
   font-weight: 200;
 }
 
 .quote-field {
   color: var(--dark);
-  background-color: var(--light);
 }
 
 .quote-button,
