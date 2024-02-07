@@ -9,24 +9,31 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Single+Day&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 
 <body>
-  <header class="container-fluid text-center bg-success bg-gradient p-3 mb-5">
+  <header class="container-fluid text-center bg-success bg-gradient p-3 mb-5">`
     <h1>Random Quote Translator!</h1>
   </header>
   <main class="container">
-    <div class="row justify-content-center">
-      <div class="quote-field col-12 col-md-10 border border-dark rounded-pill text-center my-5 p-5"></div>
-      <div id="translatedQuotes" class="translated-quotes col-12 col-md-10 border border-dark rounded-pill text-center my-5 p-5"></div> 
-      <div class="buttons d-flex justify-content-center mt-5">
-        <button type="button" class="quote-button btn btn-success cursor-pointer me-5">
+    <div class="row">
+      <div class="card quote-container border-0">
+        <img src="./assets/images/quoteborder.jpeg" class="card-img" />
+        <div class="quote-field card-img-overlay d-flex flex-column justify-content-center align-items-center">
+        </div>
+      </div>
+    </div>
+    <div id="translatedQuotes" class="row border border-dark rounded-pill text-center my-3 p-5"></div>
+    <div class="buttons row justify-content-center mt-5">
+      <div class="col-12 col-md-6">
+        <button type="button" class="quote-button btn btn-success cursor-pointer w-100">
           Get Random Quote!
         </button>
-        <select id="Translate" class="btn btn-success cursor-pointer">
+      </div>
+      <div class="col-12 col-md-6">
+        <select id="Translate" class="btn btn-success w-100 cursor-pointer">
           <option value=" " disabled selected>Select Translation</option>
           <option value="Yoda">Translate to Yoda Speak</option>
           <option value="H4X0R">Translate to H4X0R Slang</option>
