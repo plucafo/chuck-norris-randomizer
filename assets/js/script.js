@@ -25,7 +25,7 @@ async function getQuoteData() {
     console.log(`${quoteAuthor} - ${quoteText}`);
     // Create elements and set their text content to the quote
     var quoteTextEl = $("<h5>").text(`"${quoteText}"`);
-    var quoteAuthorEl = $("<h6>").addClass('text-end').text(`- ${quoteAuthor}`);
+    var quoteAuthorEl = $("<h6>").addClass("text-end").text(`- ${quoteAuthor}`);
     // Appened new elements to the page
     quoteEl.append(quoteTextEl);
     quoteEl.append(quoteAuthorEl);
@@ -34,11 +34,18 @@ async function getQuoteData() {
   }
 }
 function translateText(quoteText, translationType) {
-  if (displayedTranslations[quoteText] && displayedTranslations[quoteText].includes(translationType)) {
-    console.log(`${translationType} translation already displayed for this quote.`);
+  if (
+    displayedTranslations[quoteText] &&
+    displayedTranslations[quoteText].includes(translationType)
+  ) {
+    console.log(
+      `${translationType} translation already displayed for this quote.`
+    );
     return;
   }
-  var translationURL = `https://api.funtranslations.com/translate/${translationType.toLowerCase()}.json?text=${encodeURIComponent(quoteText)}`;
+  var translationURL = `https://api.funtranslations.com/translate/${translationType.toLowerCase()}.json?text=${encodeURIComponent(
+    quoteText
+  )}`;
   fetch(translationURL)
     .then(function (response) {
       console.log(`${translationType} Response:`, response);
@@ -47,20 +54,29 @@ function translateText(quoteText, translationType) {
     .then(function (data) {
       console.log(`${translationType} Data:`, data);
       var translatedText = data.contents.translated;
-      var translationEl = $("<p>").text(`${translationType}: "${translatedText}`);
+      var translationEl = $("<h6>").text(
+        `${translationType}: "${translatedText}`
+      );
       translatedQuotesEl.append(translationEl);
       if (!displayedTranslations[quoteText]) {
         displayedTranslations[quoteText] = [];
       }
       displayedTranslations[quoteText].push(translationType);
-    })
+    });
 }
 $("#Translate").on("change", function () {
+  translatedQuotesEl.empty();
   var pickedTranslation = $(this).val();
   var textToTranslate = $(".quote-field h5").text();
-  translateText(textToTranslate, pickedTranslation);
+  // translateText(textToTranslate, pickedTranslation);
+  testString();
   $(this).prop("selectedIndex", 0);
 });
 // Generates random quote and displays it on the page when the quote button is clicked
 var quoteBtn = $(".quote-button");
 quoteBtn.on("click", getQuoteData);
+
+function testString() {
+  var string = $("<h6>").text("This is a string for testing purpose");
+  translatedQuotesEl.append(string);
+}
