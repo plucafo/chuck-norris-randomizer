@@ -1,9 +1,6 @@
 // Variables to select html elements
 var quoteEl = $(".quote-field");
 var translatedQuotesEl = $("#translatedQuotes");
-// var yodaTranslationEl;
-// var leetTranslationEl;
-// var grootTranslationEl;
 var displayedTranslations = {};
 // Function to get a random quote from the API and display it on the page
 var quoteURL =
@@ -28,7 +25,7 @@ async function getQuoteData() {
     console.log(`${quoteAuthor} - ${quoteText}`);
     // Create elements and set their text content to the quote
     var quoteTextEl = $("<h5>").text(`"${quoteText}"`);
-    var quoteAuthorEl = $("<h6>").text(`- ${quoteAuthor}`);
+    var quoteAuthorEl = $("<h6>").addClass('text-end').text(`- ${quoteAuthor}`);
     // Appened new elements to the page
     quoteEl.append(quoteTextEl);
     quoteEl.append(quoteAuthorEl);
