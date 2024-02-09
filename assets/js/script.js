@@ -30,7 +30,7 @@ async function getQuoteData() {
 
     // Create elements and set their text content to the quote
     var quoteTextEl = $("<h5>").text(`"${quoteText}"`);
-    var quoteAuthorEl = $("<h6>").text(`- ${quoteAuthor}`);
+    var quoteAuthorEl = $("<h6>").addClass('text-end').text(`- ${quoteAuthor}`);
 
     // Appened new elements to the page
     quoteEl.append(quoteTextEl);
