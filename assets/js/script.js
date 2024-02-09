@@ -68,8 +68,8 @@ $("#Translate").on("change", function () {
   translatedQuotesEl.empty();
   var pickedTranslation = $(this).val();
   var textToTranslate = $(".quote-field h5").text();
-  // translateText(textToTranslate, pickedTranslation);
-  testString();
+  translateText(textToTranslate, pickedTranslation);
+  // testString();
   $(this).prop("selectedIndex", 0);
 });
 // Generates random quote and displays it on the page when the quote button is clicked
