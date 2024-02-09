@@ -65,11 +65,18 @@ function translateText(quoteText, translationType) {
     });
 }
 $("#Translate").on("change", function () {
+  translatedQuotesEl.empty();
   var pickedTranslation = $(this).val();
   var textToTranslate = $(".quote-field h5").text();
-  translateText(textToTranslate, pickedTranslation);
+  // translateText(textToTranslate, pickedTranslation);
+  testString();
   $(this).prop("selectedIndex", 0);
 });
 // Generates random quote and displays it on the page when the quote button is clicked
 var quoteBtn = $(".quote-button");
 quoteBtn.on("click", getQuoteData);
+
+function testString() {
+  var string = $("<h6>").text("This is a string for testing purpose");
+  translatedQuotesEl.append(string);
+}
