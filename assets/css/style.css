@@ -14,6 +14,7 @@
 body {
   font-family: "Poppins", sans-serif;
   font-weight: 300;
+  
 }
 
 header h1 {
@@ -29,3 +30,4 @@ header h1 {
 #Translate:hover {
   transform: scale(1.1);
 }
+
