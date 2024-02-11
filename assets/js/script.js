@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
       );
       return;
     }
-    var translationURL = `https://api.funtranslations.com/translate/${translationType.toLowerCase()}.json?text=${encodeURIComponent(
+    var translationURL = `https://api.funtranslations.com/translate/${translationType.toLowerCase().replace(/\s/g, '')}.json?text=${encodeURIComponent(
       quoteText
     )}`;
     fetch(translationURL)
