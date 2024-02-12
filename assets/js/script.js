@@ -46,9 +46,9 @@ document.addEventListener("DOMContentLoaded", function () {
       );
       return;
     }
-    var translationURL = `https://api.funtranslations.com/translate/${translationType.toLowerCase().replace(/\s/g, '')}.json?text=${encodeURIComponent(
-      quoteText
-    )}`;
+    var translationURL = `https://api.funtranslations.com/translate/${translationType
+      .toLowerCase()
+      .replace(/\s/g, "")}.json?text=${encodeURIComponent(quoteText)}`;
     fetch(translationURL)
       .then(function (response) {
         console.log(`${translationType} Response:`, response);
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(function (data) {
         console.log(`${translationType} Data:`, data);
         var translatedText = data.contents.translated;
-        var translationEl = $("<h6>").html(
+        var translationEl = $("<h5>").html(
           `${translationType}: "${translatedText}`
         );
         translatedQuotesEl.append(translationEl);
