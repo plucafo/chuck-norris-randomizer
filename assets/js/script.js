@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(`${translationType} Data:`, data);
         var translatedText = data.contents.translated;
         var translationEl = $("<h5>").html(
-          `${translationType}: "${translatedText}`
+          `${translationType}: ${translatedText}`
         );
         translatedQuotesEl.append(translationEl);
         if (!displayedTranslations[quoteText]) {
