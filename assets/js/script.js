@@ -58,9 +58,14 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(`${translationType} Data:`, data);
         var translatedText = data.contents.translated;
         var translationEl = $("<h5>").html(
-          `${translationType}: "${translatedText}`
+          `${translationType}: ${translatedText}`
+        );
+        var backgroundImage = $("<img>").attr(
+          "src",
+          "./assets/images/yoda.jpg"
         );
         translatedQuotesEl.append(translationEl);
+        translatedQuotesEl.append(backgroundImage);
         if (!displayedTranslations[quoteText]) {
           displayedTranslations[quoteText] = [];
         }
@@ -71,16 +76,59 @@ document.addEventListener("DOMContentLoaded", function () {
     translatedQuotesEl.empty();
     var pickedTranslation = $(this).val();
     var textToTranslate = $(".quote-field h5").text();
-    translateText(textToTranslate, pickedTranslation);
-    // testString();
+    // translateText(textToTranslate, pickedTranslation);
+    testString();
+    console.log(pickedTranslation);
+    if (pickedTranslation === "Yoda") {
+      var backgroundImage = $("<img>").attr("src", "/assets/images/yoda.jpg");
+      translatedQuotesEl.append(backgroundImage);
+    } else if (pickedTranslation === "Groot") {
+      var backgroundImage = $("<img>").attr("src", "/assets/images/groot.jpeg");
+      translatedQuotesEl.append(backgroundImage);
+      playGrootAudio();
+    } else if (pickedTranslation === "Pirate") {
+      var backgroundImage = $("<img>").attr(
+        "src",
+        "/assets/images/pirate.jpeg"
+      );
+      translatedQuotesEl.append(backgroundImage);
+    } else if (pickedTranslation === "Pig-Latin") {
+      var backgroundImage = $("<img>").attr(
+        "src",
+        "/assets/images/pig.jpeg"
+      );
+      translatedQuotesEl.append(backgroundImage);
+    } else if (pickedTranslation === "Leetspeak") {
+      var backgroundImage = $("<img>").attr(
+        "src",
+        "/assets/images/leet.jpeg"
+      );
+      translatedQuotesEl.append(backgroundImage);
+    } else if (pickedTranslation === "Klingon") {
+      var backgroundImage = $("<img>").attr(
+        "src",
+        "/assets/images/worf.jpeg"
+      );
+      translatedQuotesEl.append(backgroundImage);
+    } 
+
     $(this).prop("selectedIndex", 0);
   });
+
   // Generates random quote and displays it on the page when the quote button is clicked
   var quoteBtn = $(".quote-button");
   quoteBtn.on("click", getQuoteData);
 
+  // Function to add hardcoded string for testing when API call limit is met
   function testString() {
     var string = $("<h6>").text("This is a string for testing purpose");
     translatedQuotesEl.append(string);
   }
+  
+  // Plays groot audio file
+  function playGrootAudio() {
+    var audioPlayer = new Audio("/assets/sounds/groot.mp3");
+    audioPlayer.play();
+  }
+  
 });
