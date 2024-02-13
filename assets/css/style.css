@@ -28,7 +28,7 @@
 }
 
 :root {
-  --dark: #1d1f20;
+  --dark: rgb(7, 59, 57);
   --light: #fafafa;
   --quote-font: "Arial", sans-serif;
   --translated-font: "Arial", sans-serif;
@@ -45,18 +45,31 @@ body {
   font-weight: 300;
 }
 
+header {
+  background-color: var(--dark);
+}
+
 header h1 {
   color: var(--light);
 }
 
 .quote-button,
-#Translate {
+.translate-button {
   transition: transform 0.2s ease-in-out;
+  background-color: var(--dark);
 }
 
 .quote-button:hover,
-#Translate:hover {
+.translate-button:hover,
+.quote-button:active,
+.translate-button:active {
   transform: scale(1.1);
+  background-color: var(--dark) !important;
+}
+
+.translate-button:focus {
+  transform: scale(1);
+  background-color: var(--dark) !important;
 }
 
 #translatedQuotes {
@@ -64,6 +77,8 @@ header h1 {
   /* background-image: url(/assets/images/yoda.jpg); */
 }
 
-#translatedQuotes img {
-  
+.quote-button,
+.translate-button {
+  background-color: var(--dark);
+  border: none;
 }
