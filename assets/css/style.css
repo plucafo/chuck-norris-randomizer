@@ -58,3 +58,12 @@ header h1 {
 #Translate:hover {
   transform: scale(1.1);
 }
+
+#translatedQuotes {
+  box-shadow: 5px 5px 10px black;
+  /* background-image: url(/assets/images/yoda.jpg); */
+}
+
+#translatedQuotes img {
+  
+}
