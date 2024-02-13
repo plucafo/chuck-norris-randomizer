@@ -1,3 +1,32 @@
+@media only screen and (max-width: 1024px) {
+  .quote-container {
+    width: 75% !important;
+  }
+
+  .quote-field h5,
+  h6 {
+    font-size: small;
+  }
+
+  #translatedQuotes {
+    width: 100% !important;
+  }
+
+  #translatedQuotes h5 {
+    font-size: small;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .quote-container {
+    width: 100% !important;
+  }
+
+  .quote-container img {
+    height: 200px;
+  }
+}
+
 :root {
   --dark: #1d1f20;
   --light: #fafafa;
