@@ -2,6 +2,10 @@
 
 [![Project Banner](./assets/images/landing-page.png)](./assets/images/landing-page.png)
 
+[Github Repo](https://github.com/plucafo/random-quote-translator)
+
+[Live Demo](https://plucafo.github.io/random-quote-translator/)
+
 ## Table of Contents
 
 - [Introduction](#introduction)
