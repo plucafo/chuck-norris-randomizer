@@ -46,7 +46,12 @@ body {
 }
 
 header {
-  background-color: var(--dark);
+  border-bottom: 5px solid black;
+  background: linear-gradient(to right, var(--dark), rgb(1, 18, 18));
+}
+
+header img {
+  width: 60px;
 }
 
 header h1 {
