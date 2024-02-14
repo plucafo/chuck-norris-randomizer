@@ -1,107 +1,131 @@
-// Variables to select html elements
-var quoteEl = $('.quote-field');
+document.addEventListener("DOMContentLoaded", function () {
+  // Variables to select html elements
+  var quoteEl = $(".quote-field");
+  var translatedQuotesEl = $("#translatedQuotes");
+  var displayedTranslations = {};
 
-// Gets data from Chuck Norris API
-function getChuckNorrisData() {
-  var chuckNorrisURL = 'https://api.chucknorris.io/jokes/random';
-  fetch(chuckNorrisURL)
-    .then(function (chuckNorrisResponse) {
-      console.log(chuckNorrisResponse);
-      return chuckNorrisResponse.json();
-    })
-
-    .then(function (chuckNorrisData) {
-      console.log('chuckNorrisData: ');
-      console.log(chuckNorrisData);
-    });
-}
-
-// Translates ?text= paramater into Yoda speak
-function getYodaData(quoteText) {
-  var yodaURL =
-    'https://api.funtranslations.com/translate/yoda.json?text=' +
-    encodeURIComponent(quoteText);
-
-  //Getting data from YodaSpeak
-  fetch(yodaURL)
-    .then(function (yodaResponse) {
-      console.log('yodaResponse: ', yodaResponse);
-      return yodaResponse.json();
-    })
-
-    .then(function (yodaData) {
-      console.log('yodaData: ');
-      console.log(yodaData);
-
-      //Getting translated data from YodaSpeak and displaying in a new p element (REPLACE P ELEMENT LATER)
-      const yodaTranslation = yodaData.contents.translated;
-      const yodaTranslationEl = $('<p>').text(`Yoda: "${yodaTranslation}`);
-      quoteEl.append(yodaTranslationEl);
-    });
-}
-//Event Listener for translation dropdown
-$('#Translate').on('change', function () {
-  const pickedTranslation = $(this).val();
-  if (pickedTranslation === 'Yoda') {
-    var yodaText = $('.quote-field h5').text();
-    getYodaData(yodaText);
+  // Function to get a random quote from the API and display it on the page
+  var quoteURL =
+    "https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=1";
+  async function getQuoteData() {
+    const options = {
+      method: "GET",
+      headers: {
+        "X-RapidAPI-Key": "ba9a53a5b4msh817988e2e3af1c7p18759ejsn39447850662c",
+        "X-RapidAPI-Host": "andruxnet-random-famous-quotes.p.rapidapi.com",
+      },
+    };
+    try {
+      var response = await fetch(quoteURL, options);
+      var quoteData = await response.json();
+      console.log(quoteData); // Logs quote data to console for testing
+      quoteEl.empty(); // Clears the quote-field element before adding a new random quote
+      translatedQuotesEl.empty();
+      // Variables to collect quote and author data from API
+      var quoteText = quoteData[0].quote;
+      var quoteAuthor = quoteData[0].author;
+      console.log(`${quoteAuthor} - ${quoteText}`);
+      // Create elements and set their text content to the quote
+      var quoteTextEl = $("<h5>").text(`"${quoteText}"`);
+      var quoteAuthorEl = $("<h6>")
+        .addClass("text-end")
+        .text(`- ${quoteAuthor}`);
+      // Appened new elements to the page
+      quoteEl.append(quoteTextEl);
+      quoteEl.append(quoteAuthorEl);
+    } catch (error) {
+      console.error(error);
+    }
+    localStorage.setItem("quoteText", quoteText);
+    localStorage.setItem("quoteAuthor", quoteAuthor);
   }
-});
 
-//UNFINISHED: Hacker translator...
-// function getHackerData(quoteText){
-//     var hackerURL="https://funtranslations.com/extensions/embed/v1/funtranslations.json?text=" +encodeURIComponent(quoteText);
-//     fetch(hackerURL)
-//     .then(function(hackerResponse){
-//         console.log("hacker Response: ", hackerResponse);
-//         return hackerResponse.json();
-//     })
-//     .then(function(h4x0rdata){
-//         console.log("h4x0rdata:", h4x0rdata);
-//         const hackerTranslation = h4x0rdata.contents.translated;
-//         const hackerTranslationEl = $ ("<p>").text(`H4X0R: "${hackerTranslation}`);
-//     })
-// }
-// Gets data from Random Quote API
-const quoteURL =
-  'https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=10';
+  var savedQuoteText = localStorage.getItem("quoteText");
+  var savedQuoteAuthor = localStorage.getItem("quoteAuthor");
 
-async function getQuoteData() {
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': 'ba9a53a5b4msh817988e2e3af1c7p18759ejsn39447850662c',
-      'X-RapidAPI-Host': 'andruxnet-random-famous-quotes.p.rapidapi.com',
-    },
-  };
+  if (savedQuoteText && savedQuoteAuthor) {
+    // If there is saved data, create elements and set their text content
+    var quoteTextEl = $("<h5>").text(`"${savedQuoteText}"`);
+    var quoteAuthorEl = $("<h6>")
+      .addClass("text-end")
+      .text(`- ${savedQuoteAuthor}`);
 
-  try {
-    const response = await fetch(quoteURL, options);
-    const quoteData = await response.json();
-    console.log(quoteData); // Logs quote data to console for testing
-
-    quoteEl.empty(); // Clears the quote-field element before adding a new random quote
-
-    // Variables to collect quote and author data from API
-    var quoteText = quoteData[0].quote;
-    var quoteAuthor = quoteData[0].author;
-    console.log(`${quoteAuthor} - ${quoteText}`);
-
-    // Create elements and set their text content to the quote
-    var quoteTextEl = $('<h5>').text(`"${quoteText}"`);
-    var quoteAuthorEl = $('<h6>').text(`- ${quoteAuthor}`);
-
-    // Appened new elements to the page
+    // Append elements to the page
     quoteEl.append(quoteTextEl);
     quoteEl.append(quoteAuthorEl);
-  } catch (error) {
-    console.error(error);
   }
-}
 
-// getChuckNorrisData();
-// getYodaData();
+  // Function to translate quote to chosen translation
+  function translateText(quoteText, translationType) {
+    var translationURL = `https://api.funtranslations.com/translate/${translationType
+      .toLowerCase()
+      .replace(/\s/g, "")}.json?text=${encodeURIComponent(quoteText)}`;
+    fetch(translationURL)
+      .then(function (response) {
+        console.log(`${translationType} Response:`, response);
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(`${translationType} Data:`, data);
+        var translatedText = data.contents.translated;
+        var translationEl = $("<h5>")
+          .html(`${translationType}: ${translatedText}`)
+          .addClass("mt-2");
+        translatedQuotesEl.append(translationEl);
+        if (!displayedTranslations[quoteText]) {
+          displayedTranslations[quoteText] = [];
+        }
+        displayedTranslations[quoteText].push(translationType);
+      });
+  }
 
-// Generates random quote and displays it on the page when the quote button is clicked
-var quoteBtn = $('.quote-button');
-quoteBtn.on('click', getQuoteData);
+  // Event listener for select element
+  $("#Translate").on("change", function () {
+    translatedQuotesEl.empty();
+    var pickedTranslation = $(this).val();
+    var textToTranslate = $(".quote-field h5").text();
+    translateText(textToTranslate, pickedTranslation);
+    // testString();
+    if (pickedTranslation === "Yoda") {
+      var backgroundImage = $("<img>").attr("src", "/assets/images/yoda.jpg");
+      translatedQuotesEl.append(backgroundImage);
+    } else if (pickedTranslation === "Groot") {
+      var backgroundImage = $("<img>").attr("src", "/assets/images/groot.jpeg");
+      translatedQuotesEl.append(backgroundImage);
+      playGrootAudio();
+    } else if (pickedTranslation === "Pirate") {
+      var backgroundImage = $("<img>").attr(
+        "src",
+        "/assets/images/pirate.jpeg"
+      );
+      translatedQuotesEl.append(backgroundImage);
+    } else if (pickedTranslation === "Pig-Latin") {
+      var backgroundImage = $("<img>").attr("src", "/assets/images/pig.jpeg");
+      translatedQuotesEl.append(backgroundImage);
+    } else if (pickedTranslation === "Leetspeak") {
+      var backgroundImage = $("<img>").attr("src", "/assets/images/leet.jpeg");
+      translatedQuotesEl.append(backgroundImage);
+    } else if (pickedTranslation === "Klingon") {
+      var backgroundImage = $("<img>").attr("src", "/assets/images/worf.jpeg");
+      translatedQuotesEl.append(backgroundImage);
+    }
+
+    $(this).prop("selectedIndex", 0);
+  });
+
+  // Generates random quote and displays it on the page when the quote button is clicked
+  var quoteBtn = $(".quote-button");
+  quoteBtn.on("click", getQuoteData);
+
+  // Function to add hardcoded string for testing when API call limit is met
+  function testString() {
+    var string = $("<h6>").text("This is a string for testing purpose");
+    translatedQuotesEl.append(string);
+  }
+
+  // Plays groot audio file
+  function playGrootAudio() {
+    var audioPlayer = new Audio("/assets/sounds/groot.mp3");
+    audioPlayer.play();
+  }
+});

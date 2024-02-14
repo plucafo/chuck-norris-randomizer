@@ -1,3 +1,39 @@
+@media only screen and (max-width: 1024px) {
+  .quote-container {
+    width: 75% !important;
+  }
+
+  .quote-field h5,
+  h6 {
+    font-size: small;
+  }
+
+  #translatedQuotes {
+    width: 100% !important;
+  }
+
+  #translatedQuotes h5 {
+    font-size: small;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .quote-container {
+    width: 100% !important;
+  }
+
+  .quote-container img {
+    height: 200px;
+  }
+}
+
+:root {
+  --dark: rgb(7, 59, 57);
+  --light: #fafafa;
+  --quote-font: "Arial", sans-serif;
+  --translated-font: "Arial", sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,19 +41,49 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 300;
 }
-#Translate {
-  background-color: white;
-  color: black;
+
+header {
+  border-bottom: 5px solid black;
+  background: linear-gradient(to right, var(--dark), rgb(1, 18, 18));
 }
+
+header img {
+  width: 60px;
+}
+
+header h1 {
+  color: var(--light);
+}
+
 .quote-button,
-#Translate {
+.translate-button {
   transition: transform 0.2s ease-in-out;
+  background-color: var(--dark);
 }
 
 .quote-button:hover,
-#Translate:hover {
+.translate-button:hover,
+.quote-button:active,
+.translate-button:active {
   transform: scale(1.1);
+  background-color: var(--dark) !important;
+}
+
+.translate-button:focus {
+  transform: scale(1);
+  background-color: var(--dark) !important;
+}
+
+#translatedQuotes {
+  box-shadow: 5px 5px 10px black;
+  /* background-image: url(/assets/images/yoda.jpg); */
+}
+
+.quote-button,
+.translate-button {
+  background-color: var(--dark);
+  border: none;
 }
