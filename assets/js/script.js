@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var quoteEl = $(".quote-field");
   var translatedQuotesEl = $("#translatedQuotes");
   var displayedTranslations = {};
+
   // Function to get a random quote from the API and display it on the page
   var quoteURL =
     "https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=1";
@@ -35,17 +36,27 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (error) {
       console.error(error);
     }
+    localStorage.setItem("quoteText", quoteText);
+    localStorage.setItem("quoteAuthor", quoteAuthor);
   }
+
+  var savedQuoteText = localStorage.getItem("quoteText");
+  var savedQuoteAuthor = localStorage.getItem("quoteAuthor");
+
+  if (savedQuoteText && savedQuoteAuthor) {
+    // If there is saved data, create elements and set their text content
+    var quoteTextEl = $("<h5>").text(`"${savedQuoteText}"`);
+    var quoteAuthorEl = $("<h6>")
+      .addClass("text-end")
+      .text(`- ${savedQuoteAuthor}`);
+
+    // Append elements to the page
+    quoteEl.append(quoteTextEl);
+    quoteEl.append(quoteAuthorEl);
+  }
+
+  // Function to translate quote to chosen translation
   function translateText(quoteText, translationType) {
-    if (
-      displayedTranslations[quoteText] &&
-      displayedTranslations[quoteText].includes(translationType)
-    ) {
-      console.log(
-        `${translationType} translation already displayed for this quote.`
-      );
-      return;
-    }
     var translationURL = `https://api.funtranslations.com/translate/${translationType
       .toLowerCase()
       .replace(/\s/g, "")}.json?text=${encodeURIComponent(quoteText)}`;
@@ -57,28 +68,24 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(function (data) {
         console.log(`${translationType} Data:`, data);
         var translatedText = data.contents.translated;
-        var translationEl = $("<h5>").html(
-          `${translationType}: ${translatedText}`
-        );
-        var backgroundImage = $("<img>").attr(
-          "src",
-          "./assets/images/yoda.jpg"
-        );
+        var translationEl = $("<h5>")
+          .html(`${translationType}: ${translatedText}`)
+          .addClass("mt-2");
         translatedQuotesEl.append(translationEl);
-        translatedQuotesEl.append(backgroundImage);
         if (!displayedTranslations[quoteText]) {
           displayedTranslations[quoteText] = [];
         }
         displayedTranslations[quoteText].push(translationType);
       });
   }
+
+  // Event listener for select element
   $("#Translate").on("change", function () {
     translatedQuotesEl.empty();
     var pickedTranslation = $(this).val();
     var textToTranslate = $(".quote-field h5").text();
-    // translateText(textToTranslate, pickedTranslation);
-    testString();
-    console.log(pickedTranslation);
+    translateText(textToTranslate, pickedTranslation);
+    // testString();
     if (pickedTranslation === "Yoda") {
       var backgroundImage = $("<img>").attr("src", "/assets/images/yoda.jpg");
       translatedQuotesEl.append(backgroundImage);
