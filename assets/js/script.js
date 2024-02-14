@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else if (pickedTranslation === "Pirate") {
       var backgroundImage = $("<img>").attr(
         "src",
-        "/assets/images/pirate.jpeg"
+        "assets/images/pirate.jpeg"
       );
       translatedQuotesEl.append(backgroundImage);
     } else if (pickedTranslation === "Pig-Latin") {
