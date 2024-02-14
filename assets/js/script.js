@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Plays groot audio file
   function playGrootAudio() {
-    var audioPlayer = new Audio("/assets/sounds/groot.mp3");
+    var audioPlayer = new Audio("assets/sounds/groot.mp3");
     audioPlayer.play();
   }
 });
