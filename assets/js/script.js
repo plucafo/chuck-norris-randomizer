@@ -87,10 +87,10 @@ document.addEventListener("DOMContentLoaded", function () {
     translateText(textToTranslate, pickedTranslation);
     // testString();
     if (pickedTranslation === "Yoda") {
-      var backgroundImage = $("<img>").attr("src", "/assets/images/yoda.jpg");
+      var backgroundImage = $("<img>").attr("src", "assets/images/yoda.jpg");
       translatedQuotesEl.append(backgroundImage);
     } else if (pickedTranslation === "Groot") {
-      var backgroundImage = $("<img>").attr("src", "/assets/images/groot.jpeg");
+      var backgroundImage = $("<img>").attr("src", "assets/images/groot.jpeg");
       translatedQuotesEl.append(backgroundImage);
       playGrootAudio();
     } else if (pickedTranslation === "Pirate") {
@@ -100,13 +100,13 @@ document.addEventListener("DOMContentLoaded", function () {
       );
       translatedQuotesEl.append(backgroundImage);
     } else if (pickedTranslation === "Pig-Latin") {
-      var backgroundImage = $("<img>").attr("src", "/assets/images/pig.jpeg");
+      var backgroundImage = $("<img>").attr("src", "assets/images/pig.jpeg");
       translatedQuotesEl.append(backgroundImage);
     } else if (pickedTranslation === "Leetspeak") {
-      var backgroundImage = $("<img>").attr("src", "/assets/images/leet.jpeg");
+      var backgroundImage = $("<img>").attr("src", "assets/images/leet.jpeg");
       translatedQuotesEl.append(backgroundImage);
     } else if (pickedTranslation === "Klingon") {
-      var backgroundImage = $("<img>").attr("src", "/assets/images/worf.jpeg");
+      var backgroundImage = $("<img>").attr("src", "assets/images/worf.jpeg");
       translatedQuotesEl.append(backgroundImage);
     }
 
